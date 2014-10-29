@@ -326,7 +326,7 @@ module ActiveModel
 
     def to_json(*args)
       if perform_caching?
-        cache.fetch expand_cache_key([self.class.to_s.underscore, cache_key, 'to-json']) do
+        cache.fetch expand_cache_key([self.class.to_s.underscore, 'v2', cache_key, 'to-json']), expires_in: 5.minutes do
           super
         end
       else
@@ -354,7 +354,7 @@ module ActiveModel
     # object without the root.
     def serializable_hash
       if perform_caching?
-        cache.fetch expand_cache_key([self.class.to_s.underscore, cache_key, 'serializable-hash']) do
+        cache.fetch expand_cache_key([self.class.to_s.underscore, 'v2', cache_key, 'serializable-hash']), expires_in: 5.minutes do
           _serializable_hash
         end
       else
